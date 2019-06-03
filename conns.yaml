@@ -1,0 +1,3 @@
+clickhouse-local:
+  driver: bamboo_lib.connectors.drivers.clickhouse.ClickhouseDriver
+  uri: clickhouse://localhost:9000/oec_brazil
