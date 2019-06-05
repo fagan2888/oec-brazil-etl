@@ -16,7 +16,7 @@ color,continent,id,id_num,iso2,iso3,name
 "#c8140a","as","asarm",51,"am","arm","Armenia"
 "#0b1097","na","nabrb",52,"bb","brb","Barbados"
 "#752277","eu","eubel",56,"be","bel","Belgium"
-"#752277","eu","eublx",58,"","blx","Belgium-Luxembourg"
+"#752277","eu","eublx",58,"xx","blx","Belgium-Luxembourg"
 "#0b1097","na","nabmu",60,"bm","bmu","Bermuda"
 "#c8140a","as","asbtn",64,"bt","btn","Bhutan"
 "#00923f","sa","sabol",68,"bo","bol","Bolivia"

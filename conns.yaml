@@ -1,3 +1,7 @@
+http-local:
+  driver: bamboo_lib.connectors.drivers.http.HttpDriver
+  uri: http://www.mdic.gov.br/balanca/bd/comexstat-bd/mun/<flow>_<year>_MUN.csv
+
 clickhouse-local:
   driver: bamboo_lib.connectors.drivers.clickhouse.ClickhouseDriver
   uri: clickhouse://localhost:9000/oec_brazil
