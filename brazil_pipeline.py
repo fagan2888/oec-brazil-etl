@@ -16,7 +16,7 @@ class DownloadStep(PipelineStep):
         print("DOWNLOAD STEP")
         filename = "{}_{}_MUN.csv".format(params.get("flow"),params.get("year"))
         if filename not in os.listdir("./data_temp"):
-            r = self.connector.download(params=params)
+            r = requests.get("http://www.mdic.gov.br/balanca/bd/comexstat-bd/mun/{}_{}_MUN.csv".format(params.get("flow"),params.get("year")))
             with open("./data_temp/"+filename,"w") as file:
                 file.write(r.text)
         df = pd.read_csv("./data_temp/"+filename, sep=";")
@@ -30,6 +30,7 @@ class TransformStep(PipelineStep):
         df = prev
 
         df["time_id"] = (df["CO_ANO"].astype("str") + df["CO_MES"].astype("str").str.zfill(2)).astype("int")
+
         p = pd.read_csv("./resources/shared_hs92.csv")
         p_dict = {k:v for (k,v) in zip(p["hs4"],p["hs4_id"])}
 
@@ -44,9 +45,6 @@ class TransformStep(PipelineStep):
         g2_dict = {k:v for (k,v) in zip(g2["iso3"],g2["id_num"])}
 
         df["country_id"] = df["country_id"].map(g2_dict)
-        # Issue to fix here
-        df = df.dropna()
-        df["country_id"] = df["country_id"].astype("int")
 
         s = pd.read_csv("./resources/UF.csv", sep=";", encoding="latin-1")
         s_dict = {k:v for (k,v) in zip(s["SG_UF"],s["CO_UF"])}
@@ -61,10 +59,10 @@ class TransformStep(PipelineStep):
         df["flow_id"] = f_dict[params["flow"]]
 
         df = df[["time_id","flow_id","hs4_id","country_id","state_id","municipality_id","liquid_kg","fob"]]
-        # Issue to fix
-        df = df.dropna()
-        df = df.astype("int")
         
+        print(df.dtypes,"\n")
+        print(df.isnull().any())
+        #df.time_id = df.time_id.astype("int")
         return df
 
 
@@ -117,7 +115,7 @@ def run_brazil(params, **kwargs):
 if __name__ == '__main__':
     run_brazil({
         "source": "http-local",
-        "flow": "2019-01",
-        "year": "2019-01",
+        "flow": "EXP",
+        "year": "2019",
         "db": "clickhouse-local"
         })

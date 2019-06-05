@@ -53,7 +53,7 @@ class MunicipalityCreationStep(PipelineStep):
         df = df.rename(columns={"CO_MUN_GEO":"municipality_id","NO_MUN_MIN":"municipality_name","SG_UF":"state_code"})
         df = df.drop(columns="NO_MUN")
         df["state_code"] = df["state_code"].str.lower()
-        df.to_csv("./dimension_tables/municipality_table.csv")
+        df.to_csv("./dimension_tables/municipality_table.csv",index=False)
         return df
 
 
@@ -61,7 +61,7 @@ class FlowCreationStep(PipelineStep):
     def run_step(self, prev, params):
         print("FLOW DIMENSION")
         df = pd.DataFrame({"flow_id":[1,2], "flow_name":["Exports","Imports"]})
-        df.to_csv("./dimension_tables/flow_table.csv")
+        df.to_csv("./dimension_tables/flow_table.csv", index=False)
         return df
 
 
@@ -103,7 +103,7 @@ class DimensionsPipeline(BasePipeline):
         step9 = MunicipalityCreationStep()
         step10 = LoadStep("dim_shared_municipalities", db_connector, if_exists="replace", pk=["municipality_id"])
         step11 = FlowCreationStep()
-        step12 = LoadStep("dim_shared_flow", db_connector, if_exists="replace", pk="flow_id")
+        step12 = LoadStep("dim_shared_flow", db_connector, if_exists="replace", pk=["flow_id"])
 
         pipeline = AdvancedPipelineExecutor(params)
         pipeline = pipeline.next(step1).next(step2).next(step3).next(step4).next(step5).next(step6).next(step7).next(step8).next(step9).next(step10).next(step11).next(step12)
