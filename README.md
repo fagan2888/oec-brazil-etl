@@ -22,7 +22,9 @@ exit
 ## Linux Virtual Machine installation instructions
 
 1. Install Clickhouse:
-```sudo apt-get install dirmngr
+
+```
+sudo apt-get install dirmngr
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E0C56BD4
 
 echo "deb http://repo.yandex.ru/clickhouse/deb/stable/ main/" | sudo tee /etc/apt/sources.list.d/clickhouse.list
@@ -31,7 +33,8 @@ sudo apt-get update
 sudo apt-get install -y clickhouse-server clickhouse-client
 
 sudo service clickhouse-server start
-clickhouse-client```
+clickhouse-client
+```
 
 2. Create the database: `CREATE DATABASE oec_brazil` and `exit`
 
@@ -42,9 +45,12 @@ clickhouse-client```
 5. Create Python 3 virtual environment: `virtualenv -p python3 py3` and activate with `source ./py3/bin/activate`
 
 5. Download one year of information:
-```cd oec-brazil-etl
+
+```
+cd oec-brazil-etl
 source ./py3/bin/activate
-python file_downloader.py "EXP" "2019"```
+python file_downloader.py "EXP" "2019"
+```
 
 ## Running the scripts
 
