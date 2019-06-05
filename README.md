@@ -44,7 +44,9 @@ clickhouse-client
 
 5. Create Python 3 virtual environment: `virtualenv -p python3 py3` and activate with `source ./py3/bin/activate`
 
-5. Download one year of information:
+6. Install Bamboo lib y Bamboo cli: `pip install dw-bamboo-cli`
+
+7. Download one year of information:
 
 ```
 cd oec-brazil-etl
